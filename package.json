@@ -1,0 +1,24 @@
+{
+  "name": "fantasy-eithers",
+  "version": "0.0.0",
+  "description": "Either data structure.",
+  "main": "either.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/puffnfresh/fantasy-eithers.git"
+  },
+  "keywords": [
+    "fantasyland",
+    "either",
+    "monad"
+  ],
+  "author": "Brian McKenna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/puffnfresh/fantasy-eithers/issues"
+  },
+  "dependencies": {
+    "daggy": "0.0.1"
+  }
+}
