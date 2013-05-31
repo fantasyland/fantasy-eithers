@@ -1,6 +1,6 @@
 {
   "name": "fantasy-eithers",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Either data structure.",
   "main": "either.js",
   "scripts": {},
