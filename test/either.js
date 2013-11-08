@@ -248,5 +248,17 @@ exports.either = {
             return equals(Either.Right(a).bimap(λ.badLeft, inc))(Either.Right(inc(a)));
         },
         [Number]
+    ),
+    'when testing traverse with Right should return correct value': λ.check(
+        function(a) {
+            return a.traverse(identity, Id).value === a.r;
+        },
+        [λ.rightOf(Number)]
+    ),
+    'when testing traverse with Left should return correct value': λ.check(
+        function(a) {
+            return a.traverse(identity, Id).value === a.l;
+        },
+        [λ.leftOf(Number)]
     )
 };

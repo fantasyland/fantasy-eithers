@@ -1,4 +1,7 @@
 var daggy = require('daggy'),
+    combinators = require('fantasy-combinators'),
+    identity = combinators.identity,
+
     Either = daggy.taggedSum({
         Left:  ['l'],
         Right: ['r']
@@ -37,9 +40,7 @@ Either.prototype.chain = function(f) {
         function(l) {
             return Either.Left(l);
         },
-        function(r) {
-            return f(r);
-        }
+        f
     );
 };
 Either.prototype.concat = function(b) {
@@ -64,6 +65,17 @@ Either.prototype.map = function(f) {
 Either.prototype.ap = function(a) {
     return this.chain(function(f) {
         return a.map(f);
+    });
+};
+
+Either.prototype.traverse = function(f, p) {
+    return this.cata({
+        Left: function(x) {
+            return p.of(x);
+        },
+        Right: function(x) {
+            return p.of(f(x));
+        }
     });
 };
 
