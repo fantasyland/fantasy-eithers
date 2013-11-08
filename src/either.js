@@ -68,10 +68,23 @@ Either.prototype.ap = function(a) {
     });
 };
 
+Either.prototype.sequence = function() {
+    var x = this.cata({
+        Left: function(x) {
+            return x.constructor;
+        },
+        Right: function(x) {
+            return x.constructor;
+        }
+    });
+    return this.traverse(function(x) {
+        return x.traverse(identity, Either);
+    }, x);
+};
 Either.prototype.traverse = function(f, p) {
     return this.cata({
         Left: function(x) {
-            return p.of(x);
+            return p.of(f(x));
         },
         Right: function(x) {
             return p.of(f(x));

@@ -53,6 +53,9 @@ Id.of = Id;
 Id.prototype.concat = function(b) {
     return this.value + b.value;
 };
+Id.prototype.traverse = function(f, p) {
+    return p.of(f(this.value));
+};
 
 function idOf(type) {
     var self = this.getInstance(this, idOf);
@@ -255,10 +258,50 @@ exports.either = {
         },
         [λ.rightOf(Number)]
     ),
+    'when testing sequence with Right should return correct type': λ.check(
+        function(a) {
+            return isId(a.sequence());
+        },
+        [λ.rightOf(λ.idOf(Number))]
+    ),
+    'when testing sequence with Right should return correct nested type': λ.check(
+        function(a) {
+            return isRight(a.sequence().value);
+        },
+        [λ.rightOf(λ.idOf(Number))]
+    ),
+    'when testing sequence with Right should return correct value': λ.check(
+        function(a) {
+            return a.sequence().value.r === a.r.value;
+        },
+        [λ.rightOf(λ.idOf(Number))]
+    ),
     'when testing traverse with Left should return correct value': λ.check(
         function(a) {
             return a.traverse(identity, Id).value === a.l;
         },
         [λ.leftOf(Number)]
+    ),
+        'when testing sequence with Left should return correct type': λ.check(
+        function(a) {
+            return isId(a.sequence());
+        },
+        [λ.leftOf(λ.idOf(Number))]
+    ),
+    'when testing sequence with Left should return correct nested type': λ.check(
+        function(a) {
+            // This is a Either.Right Projection, not entirely sure this is correct?
+            // http://scalaz.github.io/scalaz/scalaz-2.9.0-1-6.0.1/doc.sxr/scalaz/Traverse.scala.html#256410
+            return isRight(a.sequence().value);
+        },
+        [λ.leftOf(λ.idOf(Number))]
+    ),
+    'when testing sequence with Left should return correct value': λ.check(
+        function(a) {
+            // This is a Either.Right Projection, not entirely sure this is correct?
+            // http://scalaz.github.io/scalaz/scalaz-2.9.0-1-6.0.1/doc.sxr/scalaz/Traverse.scala.html#256410
+            return a.sequence().value.r === a.l.value;
+        },
+        [λ.leftOf(λ.idOf(Number))]
     )
 };
