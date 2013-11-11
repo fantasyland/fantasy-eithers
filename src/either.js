@@ -1,5 +1,7 @@
 var daggy = require('daggy'),
     combinators = require('fantasy-combinators'),
+
+    compose = combinators.compose,
     identity = combinators.identity,
 
     Either = daggy.taggedSum({
@@ -69,26 +71,19 @@ Either.prototype.ap = function(a) {
 };
 
 Either.prototype.sequence = function() {
-    var x = this.cata({
-        Left: function(x) {
-            return x.constructor;
-        },
-        Right: function(x) {
-            return x.constructor;
-        }
-    });
+    var constructor = function(x) {
+        return x.constructor;
+    };
+
     return this.traverse(function(x) {
         return x.traverse(identity, Either);
-    }, x);
+    }, this.fold(constructor, constructor));
 };
 Either.prototype.traverse = function(f, p) {
+    var partial = compose(p.of)(f);
     return this.cata({
-        Left: function(x) {
-            return p.of(f(x));
-        },
-        Right: function(x) {
-            return p.of(f(x));
-        }
+        Left: partial,
+        Right: partial
     });
 };
 
