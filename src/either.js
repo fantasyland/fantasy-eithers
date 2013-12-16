@@ -71,19 +71,27 @@ Either.prototype.ap = function(a) {
 };
 
 Either.prototype.sequence = function() {
-    var constructor = function(x) {
-        return x.constructor;
-    };
-
-    return this.traverse(function(x) {
-        return x.traverse(identity, Either);
-    }, this.fold(constructor, constructor));
+    return this.traverse(
+        function(x) {
+            return x.map(function() {
+                return x.traverse(identity, Either);
+            });
+        },
+        this.fold(
+            function(x) {
+                return x.constructor;
+            },
+            identity
+        )
+    );
 };
 Either.prototype.traverse = function(f, p) {
-    var partial = compose(p.of)(f);
+    var env = this;
     return this.cata({
-        Left: partial,
-        Right: partial
+        Left: function() {
+            return p.of(env);
+        },
+        Right: f
     });
 };
 

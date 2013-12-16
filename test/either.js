@@ -53,6 +53,9 @@ Id.of = Id;
 Id.prototype.concat = function(b) {
     return this.value + b.value;
 };
+Id.prototype.map = function(f) {
+    return Id.of(f(this.value));
+};
 Id.prototype.traverse = function(f, p) {
     return p.of(f(this.value));
 };
@@ -254,7 +257,7 @@ exports.either = {
     ),
     'when testing traverse with Right should return correct value': λ.check(
         function(a) {
-            return a.traverse(identity, Id).value === a.r;
+            return a.traverse(Id.of, Id).value === a.r;
         },
         [λ.rightOf(Number)]
     ),
@@ -278,11 +281,11 @@ exports.either = {
     ),
     'when testing traverse with Left should return correct value': λ.check(
         function(a) {
-            return a.traverse(identity, Id).value === a.l;
+            return a.traverse(identity, Id).value.l === a.l;
         },
         [λ.leftOf(Number)]
     ),
-        'when testing sequence with Left should return correct type': λ.check(
+    'when testing sequence with Left should return correct type': λ.check(
         function(a) {
             return isId(a.sequence());
         },
@@ -290,17 +293,13 @@ exports.either = {
     ),
     'when testing sequence with Left should return correct nested type': λ.check(
         function(a) {
-            // This is a Either.Right Projection, not entirely sure this is correct?
-            // http://scalaz.github.io/scalaz/scalaz-2.9.0-1-6.0.1/doc.sxr/scalaz/Traverse.scala.html#256410
-            return isRight(a.sequence().value);
+            return isLeft(a.sequence().value);
         },
         [λ.leftOf(λ.idOf(Number))]
     ),
     'when testing sequence with Left should return correct value': λ.check(
         function(a) {
-            // This is a Either.Right Projection, not entirely sure this is correct?
-            // http://scalaz.github.io/scalaz/scalaz-2.9.0-1-6.0.1/doc.sxr/scalaz/Traverse.scala.html#256410
-            return a.sequence().value.r === a.l.value;
+            return a.sequence().value.l.value === a.l.value;
         },
         [λ.leftOf(λ.idOf(Number))]
     )
