@@ -54,6 +54,15 @@ Either.prototype.concat = function(b) {
         }
     );
 };
+Either.prototype.attempt = function(f) {
+    return this.chain(function(a) {
+        try {
+            return Either.Right(f(a));
+        } catch(e) {
+            return Either.Left(e);
+        }
+    });
+};
 
 // Derived
 Either.prototype.map = function(f) {
