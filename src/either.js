@@ -133,7 +133,7 @@ Either.EitherT = function(M) {
                 function(a) {
                     return M.of(Either.Left(a));
                 },
-                function() {
+                function(a) {
                     return f(a).run;
                 }
             );
