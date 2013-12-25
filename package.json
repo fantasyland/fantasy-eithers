@@ -24,8 +24,9 @@
     "grunt": "0.4.x",
     "grunt-contrib-jshint": "0.6.x",
     "grunt-contrib-nodeunit": "0.2.0",
-    "fantasy-check": "0.0.8",
-    "fantasy-helpers": "0.0.x"
+    "fantasy-check": "0.1.6",
+    "fantasy-helpers": "0.0.x",
+    "fantasy-identities": "0.0.x"
   },
   "scripts": {
       "test": "grunt"
