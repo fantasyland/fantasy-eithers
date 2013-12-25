@@ -119,10 +119,10 @@ Either.EitherT = function(M) {
     EitherT.prototype.bimap = function(f, g) {
         return this.fold(
             function(l) {
-                return Either.Right(f(l));
+                return Either.Left(f(l));
             },
             function(r) {
-                return Either.Left(g(r));
+                return Either.Right(g(r));
             }
         );
     };
