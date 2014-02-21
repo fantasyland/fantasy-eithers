@@ -1,12 +1,9 @@
 {
   "name": "fantasy-eithers",
-  "version": "0.0.1",
   "description": "Either data structure.",
-  "main": "either.js",
-  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git://github.com/puffnfresh/fantasy-eithers.git"
+    "url": "git://github.com/fantasyland/fantasy-eithers.git"
   },
   "keywords": [
     "fantasyland",
@@ -16,9 +13,25 @@
   "author": "Brian McKenna",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/puffnfresh/fantasy-eithers/issues"
+    "url": "https://github.com/fantasyland/fantasy-eithers/issues"
   },
   "dependencies": {
-    "daggy": "0.0.1"
-  }
+    "daggy": "0.0.1",
+    "fantasy-combinators": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt-cli": "0.1.9",
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-nodeunit": "0.2.0",
+    "fantasy-check": "0.1.6",
+    "fantasy-helpers": "0.0.x",
+    "fantasy-identities": "0.0.x"
+  },
+  "scripts": {
+      "test": "grunt"
+  },
+  "files": ["fantasy-eithers.js", "src/*.js"],
+  "main": "fantasy-eithers.js",
+  "version": "0.0.2"
 }
