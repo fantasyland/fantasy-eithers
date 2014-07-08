@@ -82,49 +82,49 @@ exports.either = {
     ),
     'when testing traverse with Right should return correct value': λ.check(
         function(a) {
-            return a.traverse(Identity.of, Identity).x === a.r;
+            return a.traverse(Identity.of, Identity).x.r === a.r;
         },
         [λ.rightOf(Number)]
     ),
     'when testing sequence with Right should return correct type': λ.check(
         function(a) {
-            return λ.isIdentity(a.sequence());
+            return λ.isIdentity(a.sequence(Identity));
         },
         [λ.rightOf(λ.identityOf(Number))]
     ),
     'when testing sequence with Right should return correct nested type': λ.check(
         function(a) {
-            return λ.isRight(a.sequence().x);
+            return λ.isRight(a.sequence(Identity).x);
         },
         [λ.rightOf(λ.identityOf(Number))]
     ),
     'when testing sequence with Right should return correct value': λ.check(
         function(a) {
-            return a.sequence().x.r === a.r.x;
+            return a.sequence(Identity).x.r === a.r.x;
         },
         [λ.rightOf(λ.identityOf(Number))]
     ),
     'when testing traverse with Left should return correct value': λ.check(
         function(a) {
-            return a.traverse(identity, Identity).x.l === a.l;
+            return a.traverse(Identity.of, Identity).x.l === a.l;
         },
         [λ.leftOf(Number)]
     ),
     'when testing sequence with Left should return correct type': λ.check(
         function(a) {
-            return λ.isIdentity(a.sequence());
+            return λ.isIdentity(a.sequence(Identity));
         },
         [λ.leftOf(λ.identityOf(Number))]
     ),
     'when testing sequence with Left should return correct nested type': λ.check(
         function(a) {
-            return λ.isLeft(a.sequence().x);
+            return λ.isLeft(a.sequence(Identity).x);
         },
         [λ.leftOf(λ.identityOf(Number))]
     ),
     'when testing sequence with Left should return correct value': λ.check(
         function(a) {
-            return a.sequence().x.l.x === a.l.x;
+            return a.sequence(Identity).x.l.x === a.l.x;
         },
         [λ.leftOf(λ.identityOf(Number))]
     )

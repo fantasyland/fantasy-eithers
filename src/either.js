@@ -70,28 +70,17 @@ Either.prototype.ap = function(a) {
     });
 };
 
-Either.prototype.sequence = function() {
-    return this.traverse(
-        function(x) {
-            return x.map(function() {
-                return x.traverse(identity, Either);
-            });
-        },
-        this.fold(
-            function(x) {
-                return x.constructor;
-            },
-            identity
-        )
-    );
+Either.prototype.sequence = function(p) {
+    return this.traverse(identity, p);
 };
 Either.prototype.traverse = function(f, p) {
-    var env = this;
     return this.cata({
-        Left: function() {
-            return p.of(env);
+        Left: function(l) {
+            return p.of(Either.Left(l));
         },
-        Right: f
+        Right: function(r) {
+            return f(r).map(Either.Right);
+        }
     });
 };
 
