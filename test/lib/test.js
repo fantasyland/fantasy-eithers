@@ -1,3 +1,5 @@
+'use strict';
+
 const λ = require('fantasy-check/src/adapters/nodeunit');
 const applicative = require('fantasy-check/src/laws/applicative');
 const functor = require('fantasy-check/src/laws/functor');
@@ -58,7 +60,7 @@ function rightOf(type) {
     return self;
 }
 
-λʹ = λ
+const λʹ = λ
     .property('applicative', applicative)
     .property('functor', functor)
     .property('monad', monad)

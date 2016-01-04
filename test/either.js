@@ -1,3 +1,5 @@
+'use strict';
+
 const λ = require('./lib/test');
 const applicative = λ.applicative;
 const functor = λ.functor;
