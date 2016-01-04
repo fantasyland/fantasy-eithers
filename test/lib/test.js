@@ -1,80 +1,64 @@
-var λ = require('fantasy-check/src/adapters/nodeunit'),
-    applicative = require('fantasy-check/src/laws/applicative'),
-    functor = require('fantasy-check/src/laws/functor'),
-    monad = require('fantasy-check/src/laws/monad'),
+const λ = require('fantasy-check/src/adapters/nodeunit');
+const applicative = require('fantasy-check/src/laws/applicative');
+const functor = require('fantasy-check/src/laws/functor');
+const monad = require('fantasy-check/src/laws/monad');
     
-    daggy = require('daggy'),
-    helpers = require('fantasy-helpers'),
-    combinators = require('fantasy-combinators'),
+const daggy = require('daggy');
 
-    Identity = require('fantasy-identities'),
-    Either = require('../../fantasy-eithers'),
+const {isInstanceOf} = require('fantasy-helpers');
+const {constant, identity} = require('fantasy-combinators');
 
-    constant = combinators.constant,
-    identity = combinators.identity,
+const Identity = require('fantasy-identities');
+const Either = require('../../fantasy-eithers');
 
-    inc = function(a) {
-        return a + 1;
-    },
-    equals = function(a) {
-        return function(b) {
-            return a.fold(
-                function(x) {
-                    return b.fold(
-                        function(y) {
-                            return x === y;
-                        },
-                        constant(false)
-                    );
-                },
-                function(x) {
-                    return b.fold(
-                        constant(false),
-                        function(y) {
-                            return x === y;
-                        }
-                    );
-                });
-        };
-    },
-    error = function(a) {
-        return function() {
-            throw new Error(a);
-        };
-    },
+const isIdentity = isInstanceOf(Identity);
+const isEither = isInstanceOf(Either);
+const isLeft = isInstanceOf(Either.Left);
+const isRight = isInstanceOf(Either.Right);
+const isLeftOf = isInstanceOf(leftOf);
+const isRightOf = isInstanceOf(rightOf);
+const isIdentityOf = isInstanceOf(identityOf);
 
-    isIdentity = helpers.isInstanceOf(Identity),
-    isEither = helpers.isInstanceOf(Either),
-    isLeft = helpers.isInstanceOf(Either.Left),
-    isRight = helpers.isInstanceOf(Either.Right),
-    isLeftOf = helpers.isInstanceOf(leftOf),
-    isRightOf = helpers.isInstanceOf(rightOf),
-
-    isIdentityOf = helpers.isInstanceOf(identityOf);
+function inc(a) {
+    return a + 1;
+}
+function equals(a) {
+    return (b) => {
+        return a.fold(
+            (x) => b.fold((y) => x === y, constant(false)),
+            (x) => b.fold(constant(false), (y) => x === y)
+        );
+    };
+}
+function error(a) {
+    return () => {
+        throw new Error(a);
+    };
+}
 
 Identity.prototype.traverse = function(f, p) {
     return p.of(f(this.x));
 };
 
 function identityOf(type) {
-    var self = this.getInstance(this, identityOf);
+    const self = this.getInstance(this, identityOf);
     self.type = type;
     return self;
 }
 
 function leftOf(type) {
-    var self = this.getInstance(this, leftOf);
+    const self = this.getInstance(this, leftOf);
     self.type = type;
     return self;
 }
 
 function rightOf(type) {
-    var self = this.getInstance(this, rightOf);
+    const self = this.getInstance(this, rightOf);
     self.type = type;
     return self;
 }
 
-λ = λ
+λʹ = λ
     .property('applicative', applicative)
     .property('functor', functor)
     .property('monad', monad)
@@ -93,7 +77,7 @@ function rightOf(type) {
     })
     .property('leftOf', leftOf)
     .method('arb', isLeftOf, function(a, b) {
-        return Either.Left(this.arb(a.type, b - 1));
+        return Either.Left(this.arb(a.type, b - 1))
     })
     .property('rightOf', rightOf)
     .method('arb', isRightOf, function(a, b) {
@@ -103,4 +87,4 @@ function rightOf(type) {
 
 // Export
 if(typeof module != 'undefined')
-    module.exports = λ;
+    module.exports = λʹ;
