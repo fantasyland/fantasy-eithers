@@ -1,10 +1,10 @@
 'use strict';
 
-const daggy = require('daggy');
+const {tagged, taggedSum} = require('daggy');
 const {compose, identity} = require('fantasy-combinators');
 const {of, chain, concat, map, ap, sequence} = require('fantasy-land');
 
-const Either = daggy.taggedSum({
+const Either = taggedSum({
     Left:  ['l'],
     Right: ['r']
 });
@@ -61,7 +61,7 @@ Either.prototype.traverse = function(f, p) {
 
 // Transformer
 Either.EitherT = (M) => {
-    const EitherT = daggy.tagged('run');
+    const EitherT = tagged('run');
     EitherT.prototype.fold = (f, g) => {
         return this.run[chain]((o) => M[of](o.fold(f, g)));
     };
