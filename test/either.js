@@ -1,12 +1,8 @@
 'use strict';
 
 const λ = require('./lib/test');
-const applicative = λ.applicative;
-const functor = λ.functor;
-const monad = λ.monad;
-const identity = λ.identity;
-const Either = λ.Either;
-const Identity = λ.Identity;
+const {applicative, functor, monad, identity} = λ
+const {Either, Identity} = λ;
 
 function run(a) {
     return a.run.x;

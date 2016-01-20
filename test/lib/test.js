@@ -86,7 +86,4 @@ const λʹ = λ
         return Either.Right(this.arb(a.type, b - 1));
     });
 
-
-// Export
-if(typeof module != 'undefined')
-    module.exports = λʹ;
+module.exports = λʹ;
