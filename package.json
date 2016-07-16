@@ -27,7 +27,7 @@
     "fantasy-identities": "0.0.x"
   },
   "scripts": {
-      "test": "node --harmony_destructuring node_modules/.bin/nodeunit test/*.js"
+      "test": "node --harmony_destructuring_assignment node_modules/.bin/nodeunit test/*.js"
   },
   "files": ["fantasy-eithers.js", "src/*.js"],
   "main": "fantasy-eithers.js",

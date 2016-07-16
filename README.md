@@ -4,22 +4,20 @@
 
 ## General
 
-The option type encodes the presence and absence of a value. The
-`Some` constructor represents a value and `None` represents the
-absence.
+The either type encodes values with two possibilities. Namely, the `Right` and `Left` constructor represent the first and second possibility, respectively.
 
 ## Testing
 
 ### Library
 
-Fantasy Eithers uses [nodeunit](https://github.com/caolan/nodeunit) for 
-all the tests and because of this there is currently an existing 
-[adapter](test/lib/test.js) in the library to help with integration 
+Fantasy Eithers uses [nodeunit](https://github.com/caolan/nodeunit) for
+all the tests and because of this there is currently an existing
+[adapter](test/lib/test.js) in the library to help with integration
 between nodeunit and Fantasy Check.
 
 ### Coverage
 
-Currently Fantasy Check is using [Istanbul](https://github.com/gotwarlost/istanbul) 
+Currently Fantasy Check is using [Istanbul](https://github.com/gotwarlost/istanbul)
 for code coverage analysis; you can run the coverage via the following
 command:
 
