@@ -4,7 +4,7 @@
 
 ## General
 
-The either type represents values with two possibilities. The `Right` and `Left` constructor represent the first and second possibility, respectively.
+The either type encodes values with two possibilities. Namely, the `Right` and `Left` constructor represent the first and second possibility, respectively.
 
 ## Testing
 
