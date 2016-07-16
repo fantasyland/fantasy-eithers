@@ -69,7 +69,7 @@ Either.EitherT = (M) => {
         return EitherT(M[of](Either.Right(x)));
     };
     EitherT.lift = (m) => {
-        return EitherT(m.map(Either.Right));
+        return EitherT(m[map](Either.Right));
     };
     EitherT.prototype.swap = function() {
         return this.fold(
