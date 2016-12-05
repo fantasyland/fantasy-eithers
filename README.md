@@ -4,9 +4,9 @@
 
 ## General
 
-The option type encodes the presence and absence of a value. The
-`Some` constructor represents a value and `None` represents the
-absence.
+The either type encodes two possible result types. The
+`Left` constructor wraps one of those types (typically an error value)
+and `Right` wraps another (usually a success).
 
 ## Testing
 
