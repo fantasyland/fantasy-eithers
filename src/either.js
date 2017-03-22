@@ -62,7 +62,7 @@ Either.prototype.traverse = function(f, p) {
 // Transformer
 Either.EitherT = (M) => {
     const EitherT = tagged('run');
-    EitherT.prototype.fold = (f, g) => {
+    EitherT.prototype.fold = function (f, g) {
         return this.run[chain]((o) => M[of](o.fold(f, g)));
     };
     EitherT[of] = (x) => {
